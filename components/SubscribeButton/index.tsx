@@ -1,4 +1,6 @@
 import { useSession, signIn } from 'next-auth/client';
+import { api } from '../../src/services/api';
+import { getStripeJs } from '../../src/services/stripe-js';
 import styles from './styles.module.scss';
 
 interface SubscribeButtonProps {
@@ -7,14 +9,24 @@ interface SubscribeButtonProps {
 
 export function SubscribeButton({ priceId }: SubscribeButtonProps) {
   const [session] = useSession();
-  function handleSubscribe() {
+  async function handleSubscribe() {
     if(!session){
       signIn('github')
       return;
     }
 
     // criação de checkout session
-    
+    try {
+      const response = await api.post('/subscribe')
+
+      const { sessionId } = response.data;
+
+      const stripe = await getStripeJs()
+
+      await stripe.redirectToCheckout({ sessionId: sessionId })
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
 
