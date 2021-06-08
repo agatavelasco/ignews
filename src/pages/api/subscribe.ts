@@ -9,7 +9,7 @@ type User = {
     id: string;
   }
   data: {
-    stripe_costumer_id: string;
+    stripe_customer_id: string;
   }
 }
 
@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       )
     )
 
-    let customerId = user.data.stripe_costumer_id
+    let customerId = user.data.stripe_customer_id
 
     if(!customerId) {
       const stripeCustomer = await stripe.customers.create({
