@@ -4,6 +4,7 @@ import { fauna } from '../../services/fauna';
 import { query as q } from 'faunadb'
 import { stripe } from '../../services/stripe';
 
+
 type User = {
   ref: {
     id: string;
@@ -61,6 +62,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       success_url: process.env.STRIPE_SUCCESS_URL,
       cancel_url: process.env.STRIPE_CANCEL_URL
     })
+
 
     return res.status(200).json({ sessionId: stripeCheckoutSession.id })
   } else {
