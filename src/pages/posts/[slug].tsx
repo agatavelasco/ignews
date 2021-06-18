@@ -41,15 +41,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
   const session = await getSession({ req }) // valida se usuario esta logado 'session'
   const { slug } = params;
 
-// se usuario nao estiver logado
-  if (!session.activeSubscription) {
+// se usuario nao estiver com subscription
+
+/*  if (!session?.activeSubscription) {
     return {
       redirect: {
         destination: '/',
         permanent: false,
       }
     }
-   }
+   } 
+*/ 
 
   const prismic = getPrismicClient(req)
 
